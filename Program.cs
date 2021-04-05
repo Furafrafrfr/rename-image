@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.Threading.Tasks;
 
 namespace rename_image_v2
 {
@@ -33,15 +35,15 @@ namespace rename_image_v2
     class App
     {
         string WorkingDirectory;
-        string[] ImagePath;
+        IEnumerable<string> ImagePath;
         public App(string dir)
-        {
+        {   
             WorkingDirectory = dir;
             ImagePath = Directory.GetFiles(WorkingDirectory).Where(file =>
             {
                 string extension = Path.GetExtension(file);
                 return extension == ".jpg" || extension == ".png";
-            }).ToArray();
+            });
         }
 
         public void Run()
